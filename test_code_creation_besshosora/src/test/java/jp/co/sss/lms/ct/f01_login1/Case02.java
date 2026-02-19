@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,6 +44,10 @@ public class Case02 {
 		//URLに遷移
 		goTo("http://localhost:8080/lms/");
 
+		//画面タイトル検証
+		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
+		assertEquals("ログイン", titleElement.getText());
+
 		//エビデンス取得
 		getEvidence(new Object() {
 		});
@@ -66,6 +71,10 @@ public class Case02 {
 
 		//エラーメッセージが表示されるまで待機
 		visibilityTimeout(By.className("error"), 10);
+
+		//エラーメッセージ検証
+		WebElement errorMessageElement = webDriver.findElement(By.className("error"));
+		assertEquals("* ログインに失敗しました。", errorMessageElement.getText());
 
 		//エビデンス取得
 		getEvidence(new Object() {
