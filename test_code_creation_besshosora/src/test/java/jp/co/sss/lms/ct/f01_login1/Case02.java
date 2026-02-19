@@ -52,9 +52,6 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
-		//URLに遷移
-		goTo("http://localhost:8080/lms/");
-
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
 		idElement.clear();
