@@ -31,11 +31,19 @@ public class Case01 {
 		closeDriver();
 	}
 
+	/**
+	 * @author 別所
+	 */
 	@Test
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		//URLに遷移
+		goTo("http://localhost:8080/lms/");
+
+		//エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 }
