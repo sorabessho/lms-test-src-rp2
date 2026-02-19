@@ -9,6 +9,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト ログイン機能①
@@ -31,18 +33,46 @@ public class Case02 {
 		closeDriver();
 	}
 
+	/**
+	 * @author 別所
+	 */
 	@Test
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		//URLに遷移
+		goTo("http://localhost:8080/lms/");
+
+		//エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		//URLに遷移
+		goTo("http://localhost:8080/lms/");
+
+		//画面操作
+		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		idElement.clear();
+		idElement.sendKeys("test123");
+
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		passwordElement.clear();
+		passwordElement.sendKeys("test123");
+
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+		loginBtnElement.click();
+
+		//エラーメッセージが表示されるまで待機
+		visibilityTimeout(By.className("error"), 10);
+
+		//エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 }
