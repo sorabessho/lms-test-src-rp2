@@ -41,3 +41,4 @@ replay_pid*
 .project
 .springBeans
 spring-*/src/main/java/META-INF/MANIFEST.MF
+/target/
