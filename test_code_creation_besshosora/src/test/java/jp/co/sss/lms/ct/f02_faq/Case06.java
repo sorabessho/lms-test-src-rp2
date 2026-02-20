@@ -152,9 +152,9 @@ public class Case06 {
 		searchResultElements.get(0).click();
 
 		//想定質問回答検証
-		final String expectedQuestionAnswer = "A. 受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、事情をお伺いした上で、協議という形を取らせて頂きます。 弊社営業担当までご相談下さい。";
+		final String EXPECTED_QUESTION_ANSEWER = "A. 受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、事情をお伺いした上で、協議という形を取らせて頂きます。 弊社営業担当までご相談下さい。";
 		WebElement questionAnswerElement = webDriver.findElement(By.cssSelector("dd.fs18"));
-		assertEquals(expectedQuestionAnswer, questionAnswerElement.getText());
+		assertEquals(EXPECTED_QUESTION_ANSEWER, questionAnswerElement.getText());
 
 		//エビデンス取得
 		scrollBy("800");
