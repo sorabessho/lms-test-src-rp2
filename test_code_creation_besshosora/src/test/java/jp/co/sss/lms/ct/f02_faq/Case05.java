@@ -139,7 +139,7 @@ public class Case05 {
 		assertEquals("Q.助成金書類の作成方法が分かりません", searchResultElement.getText());
 
 		//エビデンス取得
-		scrollBy("800");
+		scrollBy("190");
 		getEvidence(new Object() {
 		});
 	}
@@ -157,6 +157,7 @@ public class Case05 {
 		assertEquals("", keywordElement.getAttribute("value"));
 
 		//エビデンス取得
+		scrollTo("0");
 		getEvidence(new Object() {
 		});
 	}
