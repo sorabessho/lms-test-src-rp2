@@ -3,8 +3,6 @@ package jp.co.sss.lms.ct.f03_report;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -70,6 +68,7 @@ public class Case07 {
 		loginBtnElement.click();
 
 		//画面タイトル検証
+		visibilityTimeout(By.cssSelector("li.active"), 10);
 		WebElement titleElement = webDriver.findElement(By.cssSelector("li.active"));
 		assertEquals("コース詳細", titleElement.getText());
 
@@ -83,25 +82,17 @@ public class Case07 {
 	@DisplayName("テスト03 未提出の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		//画面操作
-		List<WebElement> lectureCategoryElements = webDriver.findElements(By.cssSelector("div.panel-body"));
-
-		outer: for (WebElement lectureCategoryElement : lectureCategoryElements) {
-			List<WebElement> sessionElements = lectureCategoryElement.findElements(By.tagName("tr"));
-			for (WebElement sessionElement : sessionElements) {
-				boolean isSubmit = sessionElement.findElement(By.cssSelector("td.w10per")).getText().equals("未提出");
-				if (isSubmit) {
-					WebElement btnElement = sessionElement
-							.findElement(By.cssSelector("input[type='submit'][value='詳細']"));
-					((JavascriptExecutor) webDriver).executeScript(
-							"arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
-							btnElement);
-					btnElement.click();
-					break outer;
-				}
-			}
-		}
+		String xpath = "//div[contains(@class,'panel-body')]"
+				+ "//tr[td[normalize-space()='未提出']]"
+				+ "//input[@type='submit' and @value='詳細']";
+		WebElement detailBtnElement = webDriver.findElement(By.xpath(xpath));
+		((JavascriptExecutor) webDriver).executeScript(
+				"arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+				detailBtnElement);
+		detailBtnElement.click();
 
 		//画面タイトル検証
+		visibilityTimeout(By.cssSelector("li.active"), 10);
 		WebElement titleElement = webDriver.findElement(By.cssSelector("li.active"));
 		assertEquals("セクション詳細", titleElement.getText());
 
@@ -148,5 +139,4 @@ public class Case07 {
 		getEvidence(new Object() {
 		});
 	}
-
 }
