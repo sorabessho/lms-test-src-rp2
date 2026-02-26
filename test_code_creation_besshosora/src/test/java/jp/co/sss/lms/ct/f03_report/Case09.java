@@ -24,17 +24,6 @@ import org.openqa.selenium.support.ui.Select;
 public class Case09 {
 
 	/**
-	 * レポート登録画面の「提出する」ボタンを押下
-	 * 
-	 * @author 別所
-	 */
-	static void clickSubmitBtn() {
-		WebElement submitBtnElement = webDriver.findElement(By.cssSelector("button[type='submit']"));
-		scrollIntoView(submitBtnElement);
-		submitBtnElement.click();
-	}
-
-	/**
 	 * レポート登録画面のタイトル検証
 	 * 
 	 * @author 別所
@@ -152,6 +141,11 @@ public class Case09 {
 		//画面タイトル検証
 		checkTitle();
 
+		//エラー検証
+		gakusyuukoumokuElement = webDriver.findElement(By.id("intFieldName_0"));
+		String classString = gakusyuukoumokuElement.getAttribute("class");
+		assertTrue(classString.contains("errorInput"));
+
 		//エビデンス取得
 		getEvidence(new Object() {
 		});
@@ -173,6 +167,11 @@ public class Case09 {
 
 		//画面タイトル検証
 		checkTitle();
+
+		//エラー検証
+		WebElement rikaidoElement = webDriver.findElement(By.id("intFieldValue_0"));
+		String classString = rikaidoElement.getAttribute("class");
+		assertTrue(classString.contains("errorInput"));
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -198,6 +197,11 @@ public class Case09 {
 		//画面タイトル検証
 		checkTitle();
 
+		//エラー検証
+		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		String classString = mokuhyounotasseidoElement.getAttribute("class");
+		assertTrue(classString.contains("errorInput"));
+
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
 		scrollIntoView(mokuhyounotasseidoElement);
@@ -219,6 +223,11 @@ public class Case09 {
 
 		//画面タイトル検証
 		checkTitle();
+
+		//エラー検証
+		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		String classString = mokuhyounotasseidoElement.getAttribute("class");
+		assertTrue(classString.contains("errorInput"));
 
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
@@ -245,6 +254,15 @@ public class Case09 {
 		//画面タイトル検証
 		checkTitle();
 
+		//エラー検証
+		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		String mokuhyounotasseidoClassString = mokuhyounotasseidoElement.getAttribute("class");
+		assertTrue(mokuhyounotasseidoClassString.contains("errorInput"));
+
+		syokannElement = webDriver.findElement(By.id("content_1"));
+		String syokannClassString = syokannElement.getAttribute("class");
+		assertTrue(syokannClassString.contains("errorInput"));
+
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
 		scrollIntoView(mokuhyounotasseidoElement);
@@ -258,6 +276,11 @@ public class Case09 {
 	@DisplayName("テスト10 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：所感・一週間の振り返りが2000文字超")
 	void test10() {
 		///画面操作
+		WebElement mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		scrollIntoView(mokuhyounotasseidoElement);
+		mokuhyounotasseidoElement.clear();
+		mokuhyounotasseidoElement.sendKeys("10");
+
 		String stringOver2001 = "あ".repeat(2001);
 		WebElement syokannElement = webDriver.findElement(By.id("content_1"));
 		scrollIntoView(syokannElement);
@@ -273,6 +296,15 @@ public class Case09 {
 
 		//画面タイトル検証
 		checkTitle();
+
+		//エラー検証
+		syokannElement = webDriver.findElement(By.id("content_1"));
+		String syokannClassString = syokannElement.getAttribute("class");
+		assertTrue(syokannClassString.contains("errorInput"));
+
+		issyuukannnohurikaeriElement = webDriver.findElement(By.id("content_2"));
+		String issyuukannnohurikaeriClassString = issyuukannnohurikaeriElement.getAttribute("class");
+		assertTrue(issyuukannnohurikaeriClassString.contains("errorInput"));
 
 		//エビデンス取得
 		syokannElement = webDriver.findElement(By.id("content_1"));
