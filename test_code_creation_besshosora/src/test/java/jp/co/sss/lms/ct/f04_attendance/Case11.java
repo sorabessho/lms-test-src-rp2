@@ -142,9 +142,7 @@ public class Case11 {
 			endMinuteSelect.selectByValue("15");
 		}
 
-		WebElement updateBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='更新']"));
-		scrollIntoView(updateBtnElement);
-		updateBtnElement.click();
+		clickUpdateBtn();
 
 		acceptJSAlert();
 
