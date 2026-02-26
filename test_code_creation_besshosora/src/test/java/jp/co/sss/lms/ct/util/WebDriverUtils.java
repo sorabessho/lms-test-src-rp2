@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -48,6 +49,17 @@ public class WebDriverUtils {
 	public static void goTo(String url) {
 		webDriver.get(url);
 		pageLoadTimeout(5);
+	}
+
+	/**
+	 * JSのalertモーダルウィンドウのOKを押下
+	 * 
+	 * @author 別所
+	 */
+	public static void acceptJSAlert() {
+		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+		alert.accept();
 	}
 
 	/**
