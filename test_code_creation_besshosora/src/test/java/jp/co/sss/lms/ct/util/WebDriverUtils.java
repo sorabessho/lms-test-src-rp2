@@ -63,6 +63,17 @@ public class WebDriverUtils {
 	}
 
 	/**
+	 * レポート登録画面の「提出する」ボタンを押下
+	 * 
+	 * @author 別所
+	 */
+	public static void clickSubmitBtn() {
+		WebElement submitBtnElement = webDriver.findElement(By.cssSelector("button[type='submit']"));
+		scrollIntoView(submitBtnElement);
+		submitBtnElement.click();
+	}
+
+	/**
 	 * ページロードタイムアウト設定
 	 * @param second
 	 */
