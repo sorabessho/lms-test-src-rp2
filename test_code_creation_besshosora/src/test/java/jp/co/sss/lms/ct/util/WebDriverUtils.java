@@ -1,5 +1,7 @@
 package jp.co.sss.lms.ct.util;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -71,6 +73,43 @@ public class WebDriverUtils {
 		WebElement submitBtnElement = webDriver.findElement(By.cssSelector("button[type='submit']"));
 		scrollIntoView(submitBtnElement);
 		submitBtnElement.click();
+	}
+
+	/**
+	 * 勤怠情報直接変更画面の「更新」ボタンを押下
+	 * 
+	 * @author 別所
+	 */
+	public static void clickUpdateBtn() {
+		WebElement updateBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='更新']"));
+		scrollIntoView(updateBtnElement);
+		updateBtnElement.click();
+	}
+
+	/**
+	 * 画面タイトルを検証
+	 * ※h2要素限定
+	 * 
+	 * @author 別所
+	 * @param expectedTitle 期待値（タイトル）
+	 */
+	public static void checkTitleH2(String expectedTitle) {
+		pageLoadTimeout(10);
+		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
+		assertEquals(expectedTitle, titleElement.getText());
+	}
+
+	/**
+	 * ボックスエラー表示を確認
+	 * classにerrorInputがあるか
+	 * 
+	 * @author 別所
+	 * @param locater
+	 */
+	public static void checkBoxError(By locater) {
+		WebElement element = webDriver.findElement(locater);
+		String classString = element.getAttribute("class");
+		assertTrue(classString.contains("errorInput"));
 	}
 
 	/**
