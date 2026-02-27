@@ -45,8 +45,7 @@ public class Case02 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -59,20 +58,17 @@ public class Case02 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("test123");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("test123");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
-		//エラーメッセージが表示されるまで待機
-		visibilityTimeout(By.className("error"), 10);
-
 		//エラーメッセージ検証
+		visibilityTimeout(By.className("error"), 10);
 		WebElement errorMessageElement = webDriver.findElement(By.className("error"));
 		assertEquals("* ログインに失敗しました。", errorMessageElement.getText());
 
