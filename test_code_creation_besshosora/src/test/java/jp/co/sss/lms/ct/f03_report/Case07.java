@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -43,8 +42,7 @@ public class Case07 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -57,14 +55,13 @@ public class Case07 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
@@ -86,9 +83,7 @@ public class Case07 {
 				+ "//tr[td[normalize-space()='未提出']]"
 				+ "//input[@type='submit' and @value='詳細']";
 		WebElement detailBtnElement = webDriver.findElement(By.xpath(xpath));
-		((JavascriptExecutor) webDriver).executeScript(
-				"arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
-				detailBtnElement);
+		scrollIntoView(detailBtnElement);
 		detailBtnElement.click();
 
 		//画面タイトル検証
@@ -128,8 +123,7 @@ public class Case07 {
 		textareaElement.clear();
 		textareaElement.sendKeys("レポート新規登録(日報) 正常系のテストを行います。");
 
-		WebElement submitBtnElement = webDriver.findElement(By.cssSelector("button[type='submit']"));
-		submitBtnElement.click();
+		clickSubmitBtn();
 
 		//ボタンが変更されているか検証
 		WebElement dailyReportBtn = webDriver.findElement(By.cssSelector("input[type='submit']"));
