@@ -44,8 +44,7 @@ public class Case06 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -58,17 +57,17 @@ public class Case06 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
+		visibilityTimeout(By.cssSelector("li.active"), 10);
 		WebElement titleElement = webDriver.findElement(By.cssSelector("li.active"));
 		assertEquals("コース詳細", titleElement.getText());
 
@@ -85,12 +84,11 @@ public class Case06 {
 		WebElement dropDownElement = webDriver.findElement(By.cssSelector("li.dropdown"));
 		dropDownElement.click();
 
-		WebElement linkElement = webDriver.findElement(By.cssSelector("a[href='/lms/help']"));
+		WebElement linkElement = webDriver.findElement(By.linkText("ヘルプ"));
 		linkElement.click();
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ヘルプ", titleElement.getText());
+		checkTitleH2("ヘルプ");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -102,12 +100,11 @@ public class Case06 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 		//画面操作
-		WebElement linkElement = webDriver.findElement(By.cssSelector("a[href='/lms/faq']"));
+		WebElement linkElement = webDriver.findElement(By.linkText("よくある質問"));
 		linkElement.click();
 
 		//開いたタブに移動
 		String currentTab = webDriver.getWindowHandle();
-		System.out.println(currentTab);
 		for (String newTab : webDriver.getWindowHandles()) {
 			if (!newTab.equals(currentTab)) {
 				webDriver.switchTo().window(newTab);
@@ -116,8 +113,7 @@ public class Case06 {
 		}
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("よくある質問", titleElement.getText());
+		checkTitleH2("よくある質問");
 
 		//エビデンス取得
 		getEvidence(new Object() {
