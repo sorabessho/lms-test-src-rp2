@@ -55,9 +55,7 @@ public class Case12 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -70,14 +68,13 @@ public class Case12 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
@@ -156,11 +153,10 @@ public class Case12 {
 	void test06() {
 		//画面操作
 		Select endMinuteSelect = new Select(webDriver.findElement(By.id("endMinute1")));
-		endMinuteSelect.selectByVisibleText("15");
-
 		Select startHourElement = new Select(webDriver.findElement(By.id("startHour1")));
 		Select startMinuteElement = new Select(webDriver.findElement(By.id("startMinute1")));
 
+		endMinuteSelect.selectByVisibleText("15");
 		startHourElement.selectByIndex(0);
 		startMinuteElement.selectByIndex(0);
 
