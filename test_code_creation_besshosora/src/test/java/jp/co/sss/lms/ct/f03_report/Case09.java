@@ -22,18 +22,6 @@ import org.openqa.selenium.support.ui.Select;
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("ケース09 受講生 レポート登録 入力チェック")
 public class Case09 {
-
-	/**
-	 * レポート登録画面のタイトル検証
-	 * 
-	 * @author 別所
-	 */
-	static void checkTitle() {
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("週報【デモ】 2022年10月2日", titleElement.getText());
-	}
-
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -54,9 +42,7 @@ public class Case09 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -69,14 +55,13 @@ public class Case09 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
@@ -98,9 +83,7 @@ public class Case09 {
 		aElement.click();
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ユーザー詳細", titleElement.getText());
+		checkTitleH2("ユーザー詳細");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -121,7 +104,7 @@ public class Case09 {
 		editBtnElement.click();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -139,12 +122,10 @@ public class Case09 {
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		gakusyuukoumokuElement = webDriver.findElement(By.id("intFieldName_0"));
-		String classString = gakusyuukoumokuElement.getAttribute("class");
-		assertTrue(classString.contains("errorInput"));
+		checkBoxError(By.id("intFieldName_0"));
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -157,21 +138,19 @@ public class Case09 {
 	void test06() {
 		//画面操作
 		WebElement gakusyuukoumokuElement = webDriver.findElement(By.id("intFieldName_0"));
+		Select rikaidoSelect = new Select(webDriver.findElement(By.id("intFieldValue_0")));
+
 		gakusyuukoumokuElement.clear();
 		gakusyuukoumokuElement.sendKeys("テスト");
-
-		Select rikaidoSelect = new Select(webDriver.findElement(By.id("intFieldValue_0")));
 		rikaidoSelect.selectByIndex(0);
 
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		WebElement rikaidoElement = webDriver.findElement(By.id("intFieldValue_0"));
-		String classString = rikaidoElement.getAttribute("class");
-		assertTrue(classString.contains("errorInput"));
+		checkBoxError(By.id("intFieldValue_0"));
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -185,9 +164,9 @@ public class Case09 {
 	void test07() {
 		//画面操作
 		Select rikaidoSelect = new Select(webDriver.findElement(By.id("intFieldValue_0")));
-		rikaidoSelect.selectByIndex(3);
-
 		WebElement mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+
+		rikaidoSelect.selectByIndex(3);
 		scrollIntoView(mokuhyounotasseidoElement);
 		mokuhyounotasseidoElement.clear();
 		mokuhyounotasseidoElement.sendKeys("数値以外を入れるとエラーになります。");
@@ -195,12 +174,10 @@ public class Case09 {
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
-		String classString = mokuhyounotasseidoElement.getAttribute("class");
-		assertTrue(classString.contains("errorInput"));
+		checkBoxError(By.id("content_0"));
 
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
@@ -222,12 +199,10 @@ public class Case09 {
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
-		String classString = mokuhyounotasseidoElement.getAttribute("class");
-		assertTrue(classString.contains("errorInput"));
+		checkBoxError(By.id("content_0"));
 
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
@@ -242,26 +217,21 @@ public class Case09 {
 	void test09() {
 		//画面操作
 		WebElement mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		WebElement syokannElement = webDriver.findElement(By.id("content_1"));
+
 		scrollIntoView(mokuhyounotasseidoElement);
 		mokuhyounotasseidoElement.clear();
-
-		WebElement syokannElement = webDriver.findElement(By.id("content_1"));
 		scrollIntoView(syokannElement);
 		syokannElement.clear();
 
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
-		String mokuhyounotasseidoClassString = mokuhyounotasseidoElement.getAttribute("class");
-		assertTrue(mokuhyounotasseidoClassString.contains("errorInput"));
-
-		syokannElement = webDriver.findElement(By.id("content_1"));
-		String syokannClassString = syokannElement.getAttribute("class");
-		assertTrue(syokannClassString.contains("errorInput"));
+		checkBoxError(By.id("content_0"));
+		checkBoxError(By.id("content_1"));
 
 		//エビデンス取得
 		mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
@@ -276,18 +246,18 @@ public class Case09 {
 	@DisplayName("テスト10 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：所感・一週間の振り返りが2000文字超")
 	void test10() {
 		///画面操作
+		String stringOver2001 = "あ".repeat(2001);
+
 		WebElement mokuhyounotasseidoElement = webDriver.findElement(By.id("content_0"));
+		WebElement syokannElement = webDriver.findElement(By.id("content_1"));
+		WebElement issyuukannnohurikaeriElement = webDriver.findElement(By.id("content_2"));
+
 		scrollIntoView(mokuhyounotasseidoElement);
 		mokuhyounotasseidoElement.clear();
 		mokuhyounotasseidoElement.sendKeys("10");
-
-		String stringOver2001 = "あ".repeat(2001);
-		WebElement syokannElement = webDriver.findElement(By.id("content_1"));
 		scrollIntoView(syokannElement);
 		syokannElement.clear();
 		syokannElement.sendKeys(stringOver2001);
-
-		WebElement issyuukannnohurikaeriElement = webDriver.findElement(By.id("content_2"));
 		scrollIntoView(issyuukannnohurikaeriElement);
 		issyuukannnohurikaeriElement.clear();
 		issyuukannnohurikaeriElement.sendKeys(stringOver2001);
@@ -295,16 +265,11 @@ public class Case09 {
 		clickSubmitBtn();
 
 		//画面タイトル検証
-		checkTitle();
+		checkTitleH2("週報【デモ】 2022年10月2日");
 
 		//エラー検証
-		syokannElement = webDriver.findElement(By.id("content_1"));
-		String syokannClassString = syokannElement.getAttribute("class");
-		assertTrue(syokannClassString.contains("errorInput"));
-
-		issyuukannnohurikaeriElement = webDriver.findElement(By.id("content_2"));
-		String issyuukannnohurikaeriClassString = issyuukannnohurikaeriElement.getAttribute("class");
-		assertTrue(issyuukannnohurikaeriClassString.contains("errorInput"));
+		checkBoxError(By.id("content_1"));
+		checkBoxError(By.id("content_2"));
 
 		//エビデンス取得
 		syokannElement = webDriver.findElement(By.id("content_1"));
