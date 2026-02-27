@@ -45,8 +45,7 @@ public class Case03 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -62,17 +61,17 @@ public class Case03 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
+		visibilityTimeout(By.cssSelector("li.active"), 10);
 		WebElement titleElement = webDriver.findElement(By.cssSelector("li.active"));
 		assertEquals("コース詳細", titleElement.getText());
 
