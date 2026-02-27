@@ -117,6 +117,7 @@ public class Case12 {
 		checkTitleH2("勤怠管理");
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
@@ -143,6 +144,7 @@ public class Case12 {
 		checkBoxError(By.id("endMinute1"));
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
@@ -175,6 +177,7 @@ public class Case12 {
 		checkBoxError(By.id("startMinute1"));
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
@@ -209,6 +212,7 @@ public class Case12 {
 		checkBoxError(By.id("endMinute1"));
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
@@ -245,6 +249,7 @@ public class Case12 {
 		checkBoxError(By.cssSelector("select[name='attendanceList[1].blankTime']"));
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
@@ -284,6 +289,7 @@ public class Case12 {
 		checkBoxError(By.cssSelector("input[name='attendanceList[1].note']"));
 
 		//エビデンス取得
+		webDriver.manage().window().fullscreen();
 		getEvidence(new Object() {
 		});
 	}
