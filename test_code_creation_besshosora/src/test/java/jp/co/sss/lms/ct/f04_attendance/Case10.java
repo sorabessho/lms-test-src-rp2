@@ -3,7 +3,6 @@ package jp.co.sss.lms.ct.f04_attendance;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,11 +13,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -49,9 +45,7 @@ public class Case10 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -64,14 +58,13 @@ public class Case10 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
@@ -92,14 +85,10 @@ public class Case10 {
 		WebElement attendanceLinkElement = webDriver.findElement(By.linkText("勤怠"));
 		attendanceLinkElement.click();
 
-		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-		alert.accept();
+		acceptJSAlert();
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("勤怠管理", titleElement.getText());
+		checkTitleH2("勤怠管理");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -114,9 +103,10 @@ public class Case10 {
 		WebElement attendanceBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='出勤']"));
 		attendanceBtnElement.click();
 
-		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-		alert.accept();
+		acceptJSAlert();
+
+		//画面タイトル検証
+		checkTitleH2("勤怠管理");
 
 		//出勤登録検証
 		//現在時刻の用意
@@ -139,9 +129,10 @@ public class Case10 {
 		WebElement livingBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='退勤']"));
 		livingBtnElement.click();
 
-		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-		alert.accept();
+		acceptJSAlert();
+
+		//画面タイトル検証
+		checkTitleH2("勤怠管理");
 
 		//退勤登録検証
 		//現在時刻の用意
