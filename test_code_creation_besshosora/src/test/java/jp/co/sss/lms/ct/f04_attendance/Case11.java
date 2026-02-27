@@ -45,9 +45,7 @@ public class Case11 {
 		goTo("http://localhost:8080/lms/");
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ログイン", titleElement.getText());
+		checkTitleH2("ログイン");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -60,14 +58,13 @@ public class Case11 {
 	void test02() {
 		//画面操作
 		WebElement idElement = webDriver.findElement(By.id("loginId"));
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
+
 		idElement.clear();
 		idElement.sendKeys("StudentAA01");
-
-		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
 		passwordElement.sendKeys("TestUser1234");
-
-		WebElement loginBtnElement = webDriver.findElement(By.cssSelector("input[type='submit'][value='ログイン']"));
 		loginBtnElement.click();
 
 		//画面タイトル検証
@@ -91,9 +88,7 @@ public class Case11 {
 		acceptJSAlert();
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("勤怠管理", titleElement.getText());
+		checkTitleH2("勤怠管理");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -109,9 +104,7 @@ public class Case11 {
 		directEditLinkElement.click();
 
 		//画面タイトル検証
-		pageLoadTimeout(10);
-		WebElement titleElement = webDriver.findElement(By.tagName("h2"));
-		assertEquals("勤怠管理", titleElement.getText());
+		checkTitleH2("勤怠管理");
 
 		//エビデンス取得
 		getEvidence(new Object() {
@@ -129,16 +122,15 @@ public class Case11 {
 		//各日付の各プルダウンボックスを操作
 		for (int i = 0; i < attendanceTrElements.size(); i++) {
 			WebElement attendanceTrElement = attendanceTrElements.get(i);
+
 			Select startHourSelect = new Select(attendanceTrElement.findElement(By.id("startHour" + i)));
-			startHourSelect.selectByValue("8");
-
 			Select startMinuteSelect = new Select(attendanceTrElement.findElement(By.id("startMinute" + i)));
-			startMinuteSelect.selectByValue("55");
-
 			Select endHourSelect = new Select(attendanceTrElement.findElement(By.id("endHour" + i)));
-			endHourSelect.selectByValue("18");
-
 			Select endMinuteSelect = new Select(attendanceTrElement.findElement(By.id("endMinute" + i)));
+
+			startHourSelect.selectByValue("8");
+			startMinuteSelect.selectByValue("55");
+			endHourSelect.selectByValue("18");
 			endMinuteSelect.selectByValue("15");
 		}
 
